@@ -10,7 +10,7 @@
 
   async function loadRules() {
     try {
-      const response = await fetch("./rules/rules.json", { cache: "no-store" });
+      const response = await fetch("./rules.json", { cache: "no-store" });
       if (!response.ok) throw new Error("No se pudo leer rules.json");
       return await response.json();
     } catch (error) {
