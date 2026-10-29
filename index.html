@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#10233f">
+  <meta name="description" content="Orientación inicial para comparar opciones de pensión en México.">
+  <title>LC Pensiona México</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark" aria-hidden="true">LC</div>
+    <div><p class="eyebrow">HERRAMIENTA DE ORIENTACIÓN</p><h1>LC Pensiona México</h1></div>
+  </header>
+  <main class="wrap">
+    <section class="hero">
+      <span class="pill">Primera versión · Beta</span>
+      <h2>Conoce tus opciones antes de decidir.</h2>
+      <p>Responde unas preguntas y recibe una guía inicial sobre los regímenes que conviene revisar. Esta versión no inventa montos de pensión ni sustituye una resolución oficial.</p>
+      <div class="privacy-note"><span aria-hidden="true">🔒</span><span><strong>Privacidad primero.</strong> La simulación se procesa en este dispositivo. No se envía ni guarda en un servidor.</span></div>
+    </section>
+
+    <section class="panel" aria-labelledby="form-title">
+      <div class="section-heading"><div><p class="eyebrow">DIAGNÓSTICO GUIADO</p><h2 id="form-title">Cuéntanos tu situación</h2></div><span id="step-count" class="step-count">Paso 1 de 3</span></div>
+      <div class="progress" aria-hidden="true"><div id="progress-fill"></div></div>
+      <form id="pension-form">
+        <fieldset class="step active" data-step="1">
+          <legend>1. Institución y trayectoria</legend>
+          <label for="institution">¿Dónde cotizaste principalmente?</label>
+          <select id="institution" name="institution" required>
+            <option value="">Selecciona una opción</option>
+            <option value="imss">IMSS</option>
+            <option value="issste">ISSSTE</option>
+            <option value="both">IMSS e ISSSTE</option>
+            <option value="other">Otra institución o régimen</option>
+            <option value="unknown">No estoy seguro/a</option>
+          </select>
+          <label for="firstContribution">¿En qué fecha comenzaste a cotizar por primera vez?</label>
+          <input id="firstContribution" name="firstContribution" type="date" />
+          <p class="hint">Si no recuerdas el día exacto, déjalo vacío. Para IMSS importa especialmente si la primera cotización fue antes del 1 de julio de 1997.</p>
+          <label for="age">¿Qué edad tienes actualmente?</label>
+          <input id="age" name="age" type="number" inputmode="numeric" min="18" max="110" placeholder="Ej. 58" required>
+          <div class="actions"><button type="button" class="primary next">Continuar</button></div>
+        </fieldset>
+
+        <fieldset class="step" data-step="2">
+          <legend>2. Cotizaciones y situación actual</legend>
+          <label for="weeks">Semanas cotizadas en IMSS (si aplica)</label>
+          <input id="weeks" name="weeks" type="number" inputmode="numeric" min="0" max="10000" placeholder="Ej. 850">
+          <label for="isssteYears">Años de servicio en ISSSTE (si aplica)</label>
+          <input id="isssteYears" name="isssteYears" type="number" inputmode="decimal" min="0" max="80" step="0.5" placeholder="Ej. 25">
+          <label for="workStatus">Situación laboral actual</label>
+          <select id="workStatus" name="workStatus" required>
+            <option value="">Selecciona una opción</option>
+            <option value="active">Sigo cotizando</option>
+            <option value="inactive">Ya no cotizo / estoy dado de baja</option>
+            <option value="independent">Trabajo por mi cuenta</option>
+            <option value="unknown">No lo sé</option>
+          </select>
+          <label for="salary">Salario mensual aproximado (MXN, opcional)</label>
+          <input id="salary" name="salary" type="number" inputmode="decimal" min="0" max="10000000" step="100" placeholder="Ej. 15000">
+          <p class="hint">Para una estimación oficial pueden requerirse salario base de cotización, historial salarial, semanas reconocidas y datos de la AFORE. El salario mensual por sí solo no basta.</p>
+          <div class="actions"><button type="button" class="secondary back">Atrás</button><button type="button" class="primary next">Continuar</button></div>
+        </fieldset>
+
+        <fieldset class="step" data-step="3">
+          <legend>3. Objetivo y datos adicionales</legend>
+          <label for="priority">¿Qué es más importante para ti?</label>
+          <select id="priority" name="priority" required>
+            <option value="balanced">Equilibrar ingreso, costo y tiempo</option>
+            <option value="monthly">Buscar mayor ingreso mensual</option>
+            <option value="cost">Reducir el desembolso adicional</option>
+            <option value="early">Conocer la primera fecha posible de retiro</option>
+          </select>
+          <label for="budget">Presupuesto mensual posible para aportaciones voluntarias (MXN, opcional)</label>
+          <input id="budget" name="budget" type="number" inputmode="decimal" min="0" max="10000000" step="100" placeholder="Ej. 2500">
+          <label for="knownRegime">¿Conoces tu régimen de pensión?</label>
+          <select id="knownRegime" name="knownRegime">
+            <option value="unknown">No lo sé</option>
+            <option value="imss73">IMSS Ley 1973</option>
+            <option value="imss97">IMSS Ley 1997</option>
+            <option value="issste10">ISSSTE Décimo Transitorio</option>
+            <option value="isssteCI">ISSSTE Cuenta Individual</option>
+          </select>
+          <div class="consent"><input id="acknowledge" type="checkbox" required><label for="acknowledge">Entiendo que es una orientación preliminar y que debo verificar mis datos y derechos con la institución correspondiente.</label></div>
+          <div class="actions"><button type="button" class="secondary back">Atrás</button><button type="submit" class="primary">Analizar mis opciones</button></div>
+        </fieldset>
+      </form>
+    </section>
+
+    <section id="results" class="panel results hidden" aria-live="polite">
+      <div class="section-heading"><div><p class="eyebrow">TU REPORTE</p><h2>Opciones para revisar</h2></div><span class="pill warning">Orientativo</span></div>
+      <p id="result-intro"></p>
+      <div id="option-list" class="option-list"></div>
+      <div class="notice"><strong>Importante:</strong> esta primera entrega no calcula una pensión mensual ni declara una modalidad ganadora. No hay una fórmula única válida para todos los casos. Los montos y requisitos deben confirmarse con el expediente oficial y las reglas vigentes.</div>
+      <h3>Datos que conviene confirmar</h3>
+      <ul id="missing-list"></ul>
+      <h3>Fuentes oficiales para continuar</h3>
+      <ul class="source-list">
+        <li><a href="https://www.imss.gob.mx/pensiones" target="_blank" rel="noopener">IMSS · Pensiones</a></li>
+        <li><a href="https://www.consar.gob.mx/gobmx/aplicativo/calculadora/Calculadoras/" target="_blank" rel="noopener">CONSAR · Calculadoras de retiro</a></li>
+        <li><a href="https://www.gob.mx/issste" target="_blank" rel="noopener">ISSSTE · Portal oficial</a></li>
+        <li><a href="https://www.diputados.gob.mx/LeyesBiblio/" target="_blank" rel="noopener">Cámara de Diputados · Leyes federales</a></li>
+      </ul>
+      <div class="actions wrap-actions"><button id="download-report" class="primary" type="button">Descargar reporte .txt</button><button id="start-over" class="secondary" type="button">Nueva evaluación</button></div>
+    </section>
+
+    <section class="panel compact">
+      <h2>Qué incluye esta beta</h2>
+      <div class="feature-grid">
+        <div><span>✓</span><strong>Formulario guiado</strong><small>Preguntas por etapas y validación básica.</small></div>
+        <div><span>✓</span><strong>Reglas separadas</strong><small>Archivo JSON independiente de la interfaz.</small></div>
+        <div><span>✓</span><strong>Sin cuenta</strong><small>No guarda ni envía los datos personales.</small></div>
+        <div><span>→</span><strong>Próxima fase</strong><small>Motores de cálculo oficiales validados y Supabase opcional.</small></div>
+      </div>
+    </section>
+    <footer><p>LC Pensiona México · Información orientativa, no asesoría legal ni resolución de pensión.</p><p>Versión 0.1.0 · Reglas de demostración no habilitadas para calcular montos.</p></footer>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>

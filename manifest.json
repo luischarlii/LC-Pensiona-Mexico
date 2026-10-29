@@ -1,0 +1,14 @@
+{
+  "name": "LC Pensiona México",
+  "short_name": "LC Pensiona",
+  "description": "Orientación inicial para opciones de pensión en México",
+  "lang": "es-MX",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f6fa",
+  "theme_color": "#10233f",
+  "icons": [
+    {"src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"}
+  ]
+}
