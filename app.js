@@ -120,7 +120,53 @@ for (const el of required) {
     addLi(missingList, "Confirmación de requisitos y parámetros legales vigentes con la institución.");
 
     document.getElementById("result-intro").textContent = intro;
-    results.classList.remove("hidden");
+        let capturedData = document.getElementById("captured-data");
+
+    if (!capturedData) {
+      capturedData = document.createElement("section");
+      capturedData.id = "captured-data";
+      capturedData.className = "result-card";
+      document.getElementById("result-intro").after(capturedData);
+    }
+
+    const displayValue = value =>
+      value === null || value === undefined || value === ""
+        ? "No indicado"
+        : value;
+
+    const beneficiaryNames = {
+      unknown: "No indicado",
+      none: "Sin beneficiarios indicados",
+      spouse: "Cónyuge",
+      children: "Hijos",
+      parents: "Padres",
+      multiple: "Varios beneficiarios"
+    };
+
+    const fields = [
+      ["Fecha de baja del IMSS", data.imssTerminationDate],
+      ["Salario base promedio diario (SBC)", data.averageSBC === null ? null : "$" + data.averageSBC + " MXN diarios"],
+      ["Beneficiarios", beneficiaryNames[data.beneficiaries] || "No indicado"],
+      ["Saldo AFORE", data.aforeBalance === null ? null : "$" + data.aforeBalance + " MXN"],
+      ["Edad deseada de retiro", data.desiredRetirementAge === null ? null : data.desiredRetirementAge + " años"],
+      ["Fecha deseada de retiro", data.desiredRetirementDate]
+    ];
+
+    capturedData.replaceChildren();
+
+    const heading = document.createElement("h3");
+    heading.textContent = "Datos capturados";
+    capturedData.appendChild(heading);
+
+    const list = document.createElement("ul");
+
+    fields.forEach(([label, value]) => {
+      const item = document.createElement("li");
+      item.textContent = label + ": " + displayValue(value);
+      list.appendChild(item);
+    });
+
+    capturedData.appendChild(list);results.classList.remove("hidden");
     lastReport = {
       app: "LC Pensiona México",
       version: "0.1.0",
