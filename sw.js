@@ -1,4 +1,4 @@
-const CACHE_NAME = "lc-pensiona-mexico-v1";
+const CACHE_NAME = "lc-pensiona-mexico-v2";
 const APP_FILES = ["./", "./index.html", "./styles.css", "./app.js", "./manifest.json", "./icon.svg", "./rules/rules.json"];
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_FILES)).then(() => self.skipWaiting()));
