@@ -78,6 +78,52 @@ for (const el of required) {
   }
   function addLi(list, text) { const li = document.createElement("li"); li.textContent = text; list.appendChild(li); }
 
+  function validateAdditionalData(data) {
+    const issues = [];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const checkDate = (value, label) => {
+      if (!value) return;
+
+      const date = new Date(`${value}T00:00:00`);
+
+      if (Number.isNaN(date.getTime())) {
+        issues.push(`${label}: la fecha no es válida.`);
+      } else if (date > today) {
+        issues.push(`${label}: la fecha está en el futuro; verifica el dato.`);
+      }
+    };
+
+    checkDate(data.imssTerminationDate, "Fecha de baja del IMSS");
+    checkDate(data.desiredRetirementDate, "Fecha deseada de retiro");
+
+    if (data.averageSBC !== null && data.averageSBC <= 0) {
+      issues.push("Salario base promedio diario: debe ser mayor que cero.");
+    }
+
+    if (data.aforeBalance !== null && data.aforeBalance < 0) {
+      issues.push("Saldo AFORE: no puede ser negativo.");
+    }
+
+    if (
+      data.desiredRetirementAge !== null &&
+      (data.desiredRetirementAge < 18 || data.desiredRetirementAge > 110)
+    ) {
+      issues.push("Edad deseada de retiro: verifica que esté entre 18 y 110 años.");
+    }
+
+    if (
+      data.imssTerminationDate &&
+      data.desiredRetirementDate &&
+      data.desiredRetirementDate < data.imssTerminationDate
+    ) {
+      issues.push("La fecha deseada de retiro es anterior a la fecha de baja del IMSS; verifica ambas fechas.");
+    }
+
+    return issues;
+  }
+
   async function analyze(data) {
     const rules = await loadRules();
     const optionList = document.getElementById("option-list");
@@ -116,7 +162,7 @@ for (const el of required) {
     if (oldIMSS && data.weeks === null) addLi(missingList, "Número de semanas reconocidas por el IMSS.");
     if (data.institution === "issste" || data.institution === "both") addLi(missingList, "Documento que identifique el régimen ISSSTE y el saldo o datos pensionarios disponibles.");
     if (data.salary === null) addLi(missingList, "Salario base de cotización o historial salarial oficial (si el cálculo lo requiere).");
-    addLi(missingList, "Fecha de nacimiento, estado de cuenta AFORE y datos de beneficiarios cuando la modalidad los requiera.");
+    addLi(missingList, "Fecha de nacimiento, estado de cuenta AFORE y datos de beneficiarios cuando la modalidad los caprequiera.");
     addLi(missingList, "Confirmación de requisitos y parámetros legales vigentes con la institución.");
 
     document.getElementById("result-intro").textContent = intro;
@@ -166,7 +212,44 @@ for (const el of required) {
       list.appendChild(item);
     });
 
-    capturedData.appendChild(list);results.classList.remove("hidden");
+    
+    capturedData.appendChild(list);
+
+    const validationIssues = validateAdditionalData(data);
+    let validationBox = document.getElementById("validation-issues");
+
+    if (!validationBox) {
+      validationBox = document.createElement("section");
+      validationBox.id = "validation-issues";
+      validationBox.className = "result-card";
+      capturedData.after(validationBox);
+    }
+
+    validationBox.replaceChildren();
+
+    const validationHeading = document.createElement("h3");
+    validationHeading.textContent = validationIssues.length
+      ? "Datos que conviene revisar"
+      : "Revisión básica de datos";
+    validationBox.appendChild(validationHeading);
+
+    if (validationIssues.length) {
+      const issueList = document.createElement("ul");
+
+      validationIssues.forEach(message => {
+        addLi(issueList, message);
+      });
+
+      validationBox.appendChild(issueList);
+    } else {
+      const validationMessage = document.createElement("p");
+      validationMessage.textContent =
+        "No se detectaron inconsistencias básicas en las fechas y cantidades revisadas. Esto no confirma la elegibilidad ni la exactitud de los datos.";
+      validationBox.appendChild(validationMessage);
+    }
+
+    results.classList.remove("hidden");
+
     lastReport = {
       app: "LC Pensiona México",
       version: "0.1.0",
