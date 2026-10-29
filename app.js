@@ -53,8 +53,19 @@ for (const el of required) {
       workStatus: fd.get("workStatus"),
       salary: fd.get("salary") === "" ? null : Number(fd.get("salary")),
       priority: fd.get("priority"),
+      
       budget: fd.get("budget") === "" ? null : Number(fd.get("budget")),
-      knownRegime: fd.get("knownRegime")
+      knownRegime: fd.get("knownRegime"),
+      imssTerminationDate: fd.get("imssTerminationDate") || null,
+      averageSBC: fd.get("averageSBC") === "" || fd.get("averageSBC") === null
+        ? null : Number(fd.get("averageSBC")),
+      beneficiaries: fd.get("beneficiaries") || "unknown",
+      aforeBalance: fd.get("aforeBalance") === "" || fd.get("aforeBalance") === null
+        ? null : Number(fd.get("aforeBalance")),
+      desiredRetirementAge: fd.get("desiredRetirementAge") === "" || fd.get("desiredRetirementAge") === null
+        ? null : Number(fd.get("desiredRetirementAge")),
+      desiredRetirementDate: fd.get("desiredRetirementDate") || null
+
     };
   }
   function dateBefore1997(date) { return Boolean(date && new Date(`${date}T00:00:00`) < new Date("1997-07-01T00:00:00")); }
