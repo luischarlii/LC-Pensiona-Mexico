@@ -226,7 +226,8 @@ for (const el of required) {
     }
 
     validationBox.replaceChildren();
-
+validationBox.style.display = "block";
+validationBox.style.visibility = "visible";
     const validationHeading = document.createElement("h3");
     validationHeading.textContent = validationIssues.length
       ? "Datos que conviene revisar"
