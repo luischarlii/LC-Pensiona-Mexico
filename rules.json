@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "version": "0.1.0-demo",
+  "effectiveDate": null,
+  "status": "diagnostico-orientativo-sin-calculo",
+  "purpose": "Reglas de orientación separadas de la interfaz. Este archivo NO contiene fórmulas oficiales ni parámetros de pensión habilitados.",
+  "rules": [
+    {
+      "id": "IMSS_FIRST_REGISTRATION_CUTOFF",
+      "institution": "IMSS",
+      "topic": "orientacion-de-regimen",
+      "parameter": "1997-07-01",
+      "ruleText": "La fecha de primera cotización puede ayudar a identificar qué régimen revisar, pero no confirma por sí sola derechos ni sustituye la validación del expediente institucional.",
+      "source": "https://www.imss.gob.mx/pensiones",
+      "status": "orientativo-requiere-validacion-de-expediente"
+    },
+    {
+      "id": "MODALIDAD_40_ELIGIBILITY",
+      "institution": "IMSS",
+      "topic": "continuacion-voluntaria",
+      "parameter": null,
+      "ruleText": "No se calcula costo ni se confirma elegibilidad. Verificar requisitos, plazos, semanas, baja, régimen, salario base y tasa aplicable en la fecha correspondiente.",
+      "source": "https://www.imss.gob.mx/tramites/imss02007",
+      "status": "no-implementado"
+    },
+    {
+      "id": "IMSS_1973_PENSION_AMOUNT",
+      "institution": "IMSS",
+      "topic": "calculo-de-pension",
+      "parameter": null,
+      "ruleText": "No implementado. No inventar cuantías, factores, incrementos ni resultados sin una especificación jurídica y pruebas verificadas.",
+      "source": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LSS.pdf",
+      "status": "no-implementado"
+    },
+    {
+      "id": "IMSS_1997_PENSION_AMOUNT",
+      "institution": "IMSS",
+      "topic": "cuenta-individual",
+      "parameter": null,
+      "ruleText": "No implementado. Requiere datos oficiales de la cuenta, requisitos vigentes y metodología validada.",
+      "source": "https://www.consar.gob.mx/gobmx/aplicativo/calculadora/Calculadoras/",
+      "status": "no-implementado"
+    },
+    {
+      "id": "ISSSTE_PENSION_AMOUNT",
+      "institution": "ISSSTE",
+      "topic": "regimen-pensionario",
+      "parameter": null,
+      "ruleText": "No implementado. Primero confirmar Décimo Transitorio o Cuenta Individual y revisar normativa aplicable.",
+      "source": "https://www.gob.mx/issste",
+      "status": "no-implementado"
+    }
+  ],
+  "calculationPolicy": {
+    "allowEstimatedMonthlyPension": false,
+    "allowModalidad40Cost": false,
+    "allowRecommendationWinner": false,
+    "reason": "No se habilitan cálculos oficiales hasta validar fórmulas, parámetros vigentes, fuentes y pruebas de regresión."
+  }
+}
