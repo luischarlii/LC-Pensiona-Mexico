@@ -26,10 +26,10 @@
   }
   function validateStep(n) {
     const step = steps[n - 1];
-    const required = [...step.querySelectorAll("[required]")].filter(el => el.type !== "checkbox" || el.checked);
-    for (const el of required) {
-      if (!el.checkValidity()) { el.reportValidity(); return false; }
-    }
+    const required = [...step.querySelectorAll("[required]")];
+for (const el of required) {
+  if (!el.checkValidity()) { el.reportValidity(); return false; }
+}
     const age = document.getElementById("age");
     if (n === 1 && age.value && (+age.value < 18 || +age.value > 110)) {
       age.setCustomValidity("Introduce una edad entre 18 y 110 años."); age.reportValidity(); age.setCustomValidity(""); return false;
