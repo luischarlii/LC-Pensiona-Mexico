@@ -222,8 +222,14 @@ for (const el of required) {
       validationBox = document.createElement("section");
       validationBox.id = "validation-issues";
       validationBox.className = "result-card";
-      capturedData.after(validationBox);
-    }
+      const resultsPanel = document.getElementById("results");
+
+if (resultsPanel && validationBox.parentElement !== resultsPanel) {
+  resultsPanel.appendChild(validationBox);
+}
+
+validationBox.style.display = "block";
+validationBox.style.visibility = "visible";
 
     validationBox.replaceChildren();
 validationBox.style.display = "block";
